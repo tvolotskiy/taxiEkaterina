@@ -58,7 +58,7 @@
         <!-- An XML file specifying the taxi fleet. The file format according to
             dvrp_vehicles_v1.dtd -->
         <!-- To create your own vehicles, see org.matsim.contrib.av.vehicles.CreateTaxiVehicles  -->
-        <param name="taxisFile" value="scenarios/spb_SAV/input/robotaxi/taxis_5000_spb.xml" />
+        <param name="taxisFile" value="scenarios/spb_SAV/input/robotaxi/taxis_20000_spb.xml" />
         <!--  param name="taxisFile" value="taxis_2000.xml" /  -->
 
         <!-- If true, time profiles of vehicle statuses (i.e. current task type)
@@ -93,11 +93,11 @@
     </module>
 
     <module name="plans">
-        <param name="inputPlansFile" value="scenarios/spb_SAV/input/population_horizon2021_1_taxi.xml"/>
+        <param name="inputPlansFile" value="scenarios/spb_SAV/input/population_horizon2021_1_taxi.xml.gz"/>
     </module>
 
     <module name="controler">
-        <param name="outputDirectory" value="output/output_test2_2021_1_robotaxi_10percent_5000/" />
+        <param name="outputDirectory" value="output/output_ekat_robotaxi_10percent_20000" />
         <param name="firstIteration" value="0" />
         <param name="lastIteration" value="1" />
         <param name="eventsFileFormat" value="xml" />

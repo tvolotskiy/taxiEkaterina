@@ -26,17 +26,18 @@ import org.matsim.api.core.v01.population.Population;
 import org.matsim.contrib.av.robotaxi.scoring.*;
 import org.matsim.contrib.dvrp.run.DvrpConfigGroup;
 import org.matsim.contrib.otfvis.OTFVisLiveModule;
-import org.matsim.contrib.taxi.run.*;
+
+import org.matsim.contrib.taxi.run.TaxiConfigConsistencyChecker;
+import org.matsim.contrib.taxi.run.TaxiConfigGroup;
+import org.matsim.contrib.taxi.run.TaxiModule;
+import org.matsim.contrib.taxi.run.examples.TaxiDvrpModules;
 import org.matsim.core.config.*;
 import org.matsim.core.controler.*;
 import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.vis.otfvis.OTFVisConfigGroup;
 import ru.otslab.sputnikCalculator.AgentsTripModeModifier;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class runs an example robotaxi scenario including scoring. The
@@ -55,10 +56,21 @@ public class RunRobotaxiExample {
     private static final double POPULATION_SAMPLE = 0.1;
     private static boolean SCALE_POPULATION = true;
 
-    public static void main(String[] args) {
-        String configFile = "config_horizon_2021_1_Robotaxi.xml";
 
-        RunRobotaxiExample.run(configFile, false);
+    public static void main(String[] args) {
+        List scenarioList = new ArrayList<String>();
+        scenarioList.add("500");
+        scenarioList.add("5000");
+        scenarioList.add("20000");
+        scenarioList.add("40000");
+
+        Iterator iterator = scenarioList.iterator();
+        while (iterator.hasNext()){
+            String scenario = (String) iterator.next();
+            String configFile = "config_horizon_2021_1_Robotaxi_" + scenario + ".xml";
+            RunRobotaxiExample.run(configFile, false);
+        }
+
     }
 
     public static void run(String configFile, boolean otfvis) {
@@ -88,7 +100,7 @@ public class RunRobotaxiExample {
                 addEventHandlerBinding().to(TaxiFareHandler.class).asEagerSingleton();
             }
         });
-        controler.addOverridingModule(new TaxiOutputModule());
+        controler.addOverridingModule(TaxiDvrpModules.create());
         controler.addOverridingModule(new TaxiModule());
 
         if (otfvis) {
